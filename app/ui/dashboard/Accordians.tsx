@@ -86,7 +86,7 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 																</TimelineDot>
 																<TimelineConnector sx={{ bgcolor: backgroundColors[Object.keys(eachTopic)[0] as keyof typeof backgroundColors].backgroundColor }} />
 															</TimelineSeparator>
-															<TimelineContent sx={{ py: '4vh', px: Object.keys(eachTopic)[0] === 'Kubernetes' ? 1.5 : 2 }}>
+															<TimelineContent sx={{ py: '4vh', px: Object.keys(eachTopic)[0] === 'Kubernetes' ? 1.5 : Object.keys(eachTopic)[0] === 'JavaScript_ES6' ? 1.8 : Object.keys(eachTopic)[0] === 'couchBase' ? 1.6 : 2 }}>
 																<Typography variant="subtitle2" color={ '#2d333a' } component="span"> { Object.keys(eachTopic)[0].split("_")[1] !== undefined ? Object.keys(eachTopic)[0].split("_")[0] + " " + Object.keys(eachTopic)[0].split("_")[1] : Object.keys(eachTopic)[0].split("_")[0] } </Typography>
 															</TimelineContent>
 														</TimelineItem>
