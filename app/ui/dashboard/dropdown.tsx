@@ -13,6 +13,8 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 	const { row, indexKey } = props;
 	const [open, setOpen] = React.useState(false);
 
+	console.log(row.Total_Training_Hrs, typeof row.Total_Training_Hrs);
+
 	const visibility = Number(row.Total_Training_Hrs) === 0 || row.Total_Training_Hrs === undefined || row.Active_Inactive === 'Left' ? 'hidden invisible' : ''
 
 	let arr: any = [{}];
@@ -76,6 +78,7 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 
 export default function DropDownTable({ rowData }: any) {
 
+	console.log(rowData);
 	const rows: any = [];
 
 	return (
