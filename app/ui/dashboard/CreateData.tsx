@@ -1,0 +1,37 @@
+export function createData( Emp_Code: string, Emp_Name: string, Designation: string, Active_Inactive: string, Department: string, Training_Topic: Array<Object>, Logic_Building: string, JavaScript_ES6: string, Git_Client: string, HTML: string, CSS: string, Bootstrap: string, SQL: string, HTTP_Protocols: string, NoSql_Database: string, couchBase: string, Angular: string, Rust: string, Node_JS: string, Android: string, IOS: string, CSharp: string, Kafka: string, Gherkin: string, Git: string, Linux: string, Docker: string, Kubernetes: string, Total_Training_Hrs: string, Gender: string, Photo_URL?: string)
+{
+	return {
+		Emp_Code,
+		Emp_Name,
+		Designation,
+		Active_Inactive,
+		Department,
+		Training_Topic: [
+			{ Logic_Building: Logic_Building },
+			{ JavaScript_ES6: JavaScript_ES6 },
+			{ Git_Client: Git_Client },
+			{ HTML: HTML },
+			{ CSS: CSS },
+			{ Bootstrap: Bootstrap },
+			{ SQL: SQL },
+			{ HTTP_Protocols: HTTP_Protocols },
+			{ NoSql_Database: NoSql_Database },
+			{ couchBase: couchBase },
+			{ Angular: Angular },
+			{ Rust: Rust },
+			{ Node_JS: Node_JS },
+			{ Android: Android },
+			{ IOS: IOS },
+			{ CSharp: CSharp },
+			{ Kafka: Kafka },
+			{ Gherkin: Gherkin },
+			{ Git: Git },
+			{ Linux: Linux },
+			{ Docker: Docker },
+			{ Kubernetes: Kubernetes },
+		],
+		Total_Training_Hrs,
+		Gender,
+		Photo_URL,
+	};
+}
