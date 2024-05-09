@@ -5,9 +5,9 @@ import avatarm from '@/public/avatarm.svg';
 import avatarf from '@/public/avatarf.svg';
 import { blue } from '@mui/material/colors';
 import { backgroundColors } from './backgroundColours';
-import { CorporateFare, RememberMe, ModelTraining, ExpandMore, Pending, PlayCircleFilled } from '@mui/icons-material';
+import { CorporateFare, RememberMe, ModelTraining, ExpandMore, Pending } from '@mui/icons-material';
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, Masonry } from '@mui/lab';
-import { Card, CardHeader, CardMedia, CardContent, Avatar, Typography, IconButton, Chip, Tooltip, Zoom, Accordion, AccordionSummary, AccordionDetails, Box } from '@mui/material';
+import { Card, CardHeader, CardMedia, CardContent, Avatar, Typography, IconButton, Chip, Tooltip, Zoom, Accordion, AccordionSummary, AccordionDetails, Grid } from '@mui/material';
 
 
 export const Accordians = ({rowsData, department, expanded, handleChange}: any) => {
@@ -53,22 +53,30 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 			<AccordionSummary expandIcon={<ExpandMore />} aria-controls={`panel${department}d-content`} id={`panel${department}d-header`}>
 				<Typography>{ department.replaceAll("_", " ") + " : " + rowsData.length }</Typography>
 			</AccordionSummary>
-			<AccordionDetails className='p-[5vh]'>
-				<Masonry columns={3} spacing={2}>
+			<AccordionDetails className='sm:p-[2vh] md: p-[5vh]'>
+				<Masonry columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} spacing={2}>
 					{ 
 						rowsData.map((eachEmployee: any, index: number) => (
-							<Card key={index} sx={{ maxWidth: 380, display: 'flex', flexDirection: 'column' }}>
+							<Card key={index} sx={{ maxWidth: 380, minWidth: 180, display: 'flex', flexDirection: 'column' }}>
 								<CardHeader avatar={ <Avatar sx={{ bgcolor: blue[500] }}>{ eachEmployee.Emp_Name.split(" ")[0][0] + eachEmployee.Emp_Name.split(" ")[1][0] }</Avatar> } title={ eachEmployee.Emp_Name } subheader={"Designation - " + eachEmployee.Designation} />								
 								<CardMedia component="img" height="194" image={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } alt={ eachEmployee.Emp_Name } />
 								<CardContent sx={{ flex: '1 0 auto' }}>
 									<Typography component="div" sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-										<Chip color="info" icon={<RememberMe fontSize='small' />} label={ eachEmployee.Emp_Code } />
-										<Tooltip title={` Total Training Hours of ${eachEmployee.Emp_Name} `} arrow TransitionComponent={Zoom} placement="bottom">
-											<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours" onClick={ () => handleVisibility(String(eachEmployee.Emp_Code)) } disabled={ eachEmployee.Total_Training_Hrs === 0 ? true : false }>
-												<Chip color={ eachEmployee.Total_Training_Hrs === 0 ? "error" : "success" } icon={<ModelTraining fontSize='small' />} label={ eachEmployee.Total_Training_Hrs } />
-											</IconButton>
-										</Tooltip>
-										<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ eachEmployee.Department } />
+										<Grid container spacing={2}>
+											<Grid item xs={7} sm={4} lg={4}>
+												<Chip color="info" icon={<RememberMe fontSize='small' />} label={ eachEmployee.Emp_Code } />
+											</Grid>
+											<Grid item xs={3} sm={3} lg={4}>
+												<Tooltip title={` Total Training Hours of ${eachEmployee.Emp_Name} `} arrow TransitionComponent={Zoom} placement="bottom">
+													<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours" onClick={ () => handleVisibility(String(eachEmployee.Emp_Code)) } disabled={ eachEmployee.Total_Training_Hrs === 0 ? true : false }>
+														<Chip color={ eachEmployee.Total_Training_Hrs === 0 ? "error" : "success" } icon={<ModelTraining fontSize='small' />} label={ eachEmployee.Total_Training_Hrs } />
+													</IconButton>
+												</Tooltip>
+											</Grid>
+											<Grid item xs={12} sm={5} lg={4}>
+												<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ eachEmployee.Department } />
+											</Grid>
+										</Grid>
 									</Typography>
 									<Typography component="div" id={String(eachEmployee.Emp_Code)} style={{ display: 'none', visibility: 'hidden'}}>
 										<Timeline position="alternate" sx={{ mx: 2, marginRight: 7 }}>
@@ -86,7 +94,7 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 																</TimelineDot>
 																<TimelineConnector sx={{ bgcolor: backgroundColors[Object.keys(eachTopic)[0] as keyof typeof backgroundColors].backgroundColor }} />
 															</TimelineSeparator>
-															<TimelineContent sx={{ py: '4vh', px: Object.keys(eachTopic)[0] === 'Kubernetes' ? 1.5 : 2 }}>
+															<TimelineContent sx={{ py: '4vh', px: Object.keys(eachTopic)[0] === 'Kubernetes' ? 1.5 : Object.keys(eachTopic)[0] === 'JavaScript_ES6' ? 1.8 : Object.keys(eachTopic)[0] === 'couchBase' ? 1.6 : 2 }}>
 																<Typography variant="subtitle2" color={ '#2d333a' } component="span"> { Object.keys(eachTopic)[0].split("_")[1] !== undefined ? Object.keys(eachTopic)[0].split("_")[0] + " " + Object.keys(eachTopic)[0].split("_")[1] : Object.keys(eachTopic)[0].split("_")[0] } </Typography>
 															</TimelineContent>
 														</TimelineItem>

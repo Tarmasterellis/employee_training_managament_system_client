@@ -29,6 +29,7 @@ export const AppBarLinks = () => {
 
 	const handleCloseNavMenu = (index: number) => {
 		router.push(`${ pathname?.split("/dashboard")[0] + NavigationLink[index].toString() }`, { scroll: false });
+		setAnchorElNav(null);
 	};
 
 	return(

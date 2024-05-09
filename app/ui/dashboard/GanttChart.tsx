@@ -8,7 +8,7 @@ import avatarf from '@/public/avatarf.svg';
 import { DashboardCard, DashboardCardTwoIcons } from './dashboardCard';
 import { purple, green, blue } from '@mui/material/colors';
 import { ExpandMore, CorporateFare, RememberMe, Male, Female, Groups, ModelTraining } from '@mui/icons-material';
-import { Card, CardMedia, CardContent, Grid, Typography, AccordionDetails, Accordion, Box, IconButton, AccordionSummary, Chip, Tooltip, Zoom, MenuItem } from '@mui/material';
+import { Card, CardMedia, CardContent, Grid, Typography, AccordionDetails, Accordion, Box, AccordionSummary, Chip } from '@mui/material';
 
 
 // Gantt Chart According to employees
@@ -55,16 +55,20 @@ export const GanttChart = ({ rowDataTrainer, rowData }: any) => {
 	return (
 		<>
 			{/* Header Components */}
-			<Box sx={{ display: 'flex', justifyContent: 'space-evenly', padding: '1vw' }}>
+			<Grid container spacing={2} className='mb-2'>
 				{
 					dashboardCardData.map((item: any, index: number) =>
 						item.hasOwnProperty("icon2")
 						?
-							<DashboardCardTwoIcons key = { index } color = { item.color } icon1 = { item.icon1 } icon2 = { item.icon2 } text = { item.text } />
+							<Grid item xs={12} md={6} lg={4} key = { index }>
+								<DashboardCardTwoIcons color = { item.color } icon1 = { item.icon1 } icon2 = { item.icon2 } text = { item.text } />
+							</Grid>
 						:
-							<DashboardCard key = { index } color = { item.color } icon = { item.icon } text = { item.text } trainingTopics = { item.trainingTopics } /> )
-				}
-			</Box>
+							<Grid item xs={12} md={6} lg={4} key = { index }>
+								<DashboardCard color = { item.color } icon = { item.icon } text = { item.text } trainingTopics = { item.trainingTopics } />
+							</Grid>
+				)}
+			</Grid>
 			
 			{/* Trainer Accordian */}
 			<Accordion className={`p-5`} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -72,28 +76,28 @@ export const GanttChart = ({ rowDataTrainer, rowData }: any) => {
 					<Typography>Total Trainers: { rowsTrainer.length }</Typography>
 				</AccordionSummary>
 				<AccordionDetails>
-					<Grid container sx={{ bgcolor: '#2d333a', padding: '1vw' }} className='rounded-lg flex justify-around'>
+					<Grid container spacing={2} sx={{ bgcolor: '#2d333a', padding: '1vw' }} className='rounded-lg flex justify-around'>
 						{
 							rowsTrainer.map((eachEmployee: any, index: number) => (
-								<Grid item key={ index }>
+								<Grid item key={ index } xs={12} md={6} lg={4}>
 									<Card sx={{ display: 'flex' }}>
 										<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 											<CardContent sx={{ flex: '1 0 auto' }}>
 												<Typography component="div" variant="h5"> { eachEmployee.Emp_Name + " - " + eachEmployee.Designation } </Typography>
 												<Typography variant="subtitle2" color="text.secondary" component="div" sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-													<Chip color="info" icon={<RememberMe fontSize='small' />} label={ eachEmployee.Emp_Code } />
-													<Chip color={ eachEmployee.Gender === "Male" ? "error" : "success" } icon={ eachEmployee.Gender === "Male" ? <Male /> : <Female /> } label={ eachEmployee.Gender } />
-													<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ eachEmployee.Department } />
+													<Grid container spacing={2}>
+														<Grid item xs={12} md={6} lg={4}>
+															<Chip color="info" icon={<RememberMe fontSize='small' />} label={ eachEmployee.Emp_Code } />
+														</Grid>
+														<Grid item xs={12} md={6} lg={4}>
+															<Chip color={ eachEmployee.Gender === "Male" ? "error" : "success" } icon={ eachEmployee.Gender === "Male" ? <Male /> : <Female /> } label={ eachEmployee.Gender } />
+														</Grid>
+														<Grid item xs={12} md={6} lg={4}>
+															<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ eachEmployee.Department } />
+														</Grid>
+													</Grid>
 												</Typography>
 											</CardContent>
-											<Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-												
-												{/* <Tooltip title="Completed Training Hours" arrow TransitionComponent={Zoom} placement="right">
-													<IconButton aria-label="Completed Training Hours">
-														<Chip color="success" icon={<ModelTraining fontSize='small' />} label={ eachEmployee.Emp_Name[0] === "Ellis Sanjay Tarmaster" ? totalTrainingHoursEllis : totalTrainingHoursAman } />
-													</IconButton>
-												</Tooltip> */}
-											</Box>
 										</Box>
 										<CardMedia component="img" sx={{ width: 151 }} image={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } alt={ eachEmployee.Emp_Name } />
 									</Card>

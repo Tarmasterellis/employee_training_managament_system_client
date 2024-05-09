@@ -24,7 +24,7 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 
 	arr = arr.filter((value: any) => Object.keys(value).length !== 0);
 
-	const chartSetting = { xAxis: [ { label: 'Training Attended' } ], width: 500, height: 250 };
+	const chartSetting = { xAxis: [ { label: 'Training Attended' } ], width: 450, height: 250 };
 
 	const valueFormatter = (value: number | null) => `${value}`;
 
@@ -48,12 +48,12 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 							<Typography variant="h6" gutterBottom component="div"> Total Training Hours: { row.Total_Training_Hrs }</Typography>
 							<Box sx={{ flexGrow: 1 }}>
 								<Grid container spacing={2}>
-									<Grid xs={6}>
+									<Grid xs={12} md={3} lg={4}>
 										<Grid container spacing={2}>
 											{
 												row.Training_Topic.map((historyRow: any, index: number) => (
 													<>
-														<Grid className={`${historyRow[Object.keys(historyRow)[0]] === undefined || historyRow[Object.keys(historyRow)[0]] === 0 ? "hidden invisible" : '' }`} key={index} xs={2} sm={3} md={3}>
+														<Grid className={`${historyRow[Object.keys(historyRow)[0]] === undefined || historyRow[Object.keys(historyRow)[0]] === 0 ? "hidden invisible" : '' }`} key={index} xs={4} sm={3} md={12} lg={5}>
 															<Chip label={`${[Object.keys(historyRow)[0]]}: ${ historyRow[Object.keys(historyRow)[0]] }`} style={{backgroundColor:`${backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].backgroundColor}`, color: `${backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].color}`}} />
 														</Grid>
 													</>
@@ -61,7 +61,7 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 											}
 										</Grid>
 									</Grid>
-									<Grid xs={6} className={`flex justify-center items-center self-center`}>
+									<Grid xs={12} md={9} lg={8} className={`flex justify-center items-center self-center`}>
 										<BarChart dataset={arr} yAxis={[{ scaleType: 'band', dataKey: 'label' }]} series= {[{dataKey: 'data', label: 'Hours Of Training', valueFormatter }]} layout="horizontal" {...chartSetting} />
 									</Grid>
 								</Grid>

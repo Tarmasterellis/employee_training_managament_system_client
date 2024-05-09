@@ -20,7 +20,7 @@ export const DashboardCard = ({ color, icon, text, trainingTopics }: any) => {
 				<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 					<CardContent sx={{ flex: '1 0 auto' }}>
 						<Typography component="div" variant="h6" sx={{ mt: 1.5 }}>
-							<MenuItem sx={{ fontWeight: 'bold' }}> { text } </MenuItem>
+							<MenuItem className={`max-[370px]:text-[11px] max-[500px]:text-[13px]`} sx={{ fontWeight: 'bold' }}> { text } </MenuItem>
 						</Typography>
 						
 					</CardContent>
@@ -41,7 +41,7 @@ export const DashboardCardTwoIcons = ({ color, icon1, icon2, text }: any) => {
 	return (
 		<>
 			<Snackbar open={openSnacBar} autoHideDuration={2000} onClose={handleClose} TransitionComponent={Slide}>
-				<Alert onClose={handleClose} severity="info" variant="filled" sx={{ width: '100%' }}> Please visit Employee-Wise Overview for Details! </Alert>
+				<Alert onClose={handleClose} severity="info" variant="filled" sx={{ width: '100%' }} className={`max-[500px]:text-[12px]`}> Please visit Employee-Wise Overview for Details! </Alert>
 			</Snackbar>
 			<Card sx={{ display: 'flex', bgcolor: color, color: '#FFFFFF', cursor: 'pointer' }} onClick={handleClick} elevation={5}>
 				<CardMedia sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pl: 3, flexDirection: 'column', gap: 0}}>
@@ -51,7 +51,7 @@ export const DashboardCardTwoIcons = ({ color, icon1, icon2, text }: any) => {
 				<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 					<CardContent sx={{ flex: '1 0 auto' }}>
 						<Typography component="div" variant="h6" sx={{ mt: 1.5 }}>
-							<MenuItem sx={{ fontWeight: 'bold' }}> { text } </MenuItem>
+							<MenuItem className={`max-[370px]:text-[11px] max-[500px]:text-[12px]`} sx={{ fontWeight: 'bold' }}> { text } </MenuItem>
 						</Typography>
 					</CardContent>
 				</Box>

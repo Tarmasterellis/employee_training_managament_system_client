@@ -4,7 +4,7 @@ import { AppBarPage } from '../ui/dashboard/AppBarPage';
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="flex h-screen flex-col">
-			<div className="w-full h-[7.5vh] flex-none">
+			<div className="w-full h-[8vh] flex-none">
 				<AppBarPage />
 			</div>
 			{/* <div className="w-full flex-none md:w-64">

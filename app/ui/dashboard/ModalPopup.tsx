@@ -26,7 +26,7 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 					<Dialog fullWidth={ true } maxWidth={'xl'} open={open} onClose={handleClose} aria-labelledby="dialog-topics">
 						<DialogTitle id="dialog-topics"> Training Topics </DialogTitle>
 						<DialogContent>
-							<Masonry columns={5} spacing={2}>
+							<Masonry columns={{ xs: 1, sm: 2, md: 4, lg: 5 }} spacing={2}>
 								{
 									trainingTopics.map((item: any, index: number) =>
 										<DialogContentText key={ index }>
@@ -60,7 +60,7 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 							</span>
 						</DialogTitle>
 						<List sx={{ pt: 0 }}>
-							<Masonry columns={3} spacing={2}>
+							<Masonry columns={{ xs: 1, sm: 2, md: 2, lg: 3 }} spacing={2}>
 								{
 									trainingTopics.map((eachEmployee: any, index: number) =>
 										<Paper key={index} sx={{ padding: 1 }} elevation={2}>
@@ -68,8 +68,8 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 												<ListItemAvatar>
 													<Avatar sx={{ width: 50, height: 50 }} alt={ eachEmployee.Gender } src={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } />
 												</ListItemAvatar>
-												<ListItemText className={`flex-none w-[8vw]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
-												<ListItemText primary = { eachEmployee.Gender === "Male" ? <Male  sx={{ color: '#21a8fa' }} /> : <Female  sx={{ color: '#e52264' }} /> } />
+												<ListItemText className={`flex-none max-[400px]:w-[8vw]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
+												<ListItemText className={`flex justify-end`} primary = { eachEmployee.Gender === "Male" ? <Male  sx={{ color: '#21a8fa' }} /> : <Female  sx={{ color: '#e52264' }} /> } />
 											</ListItem>
 										</Paper>
 									)
