@@ -68,7 +68,7 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 												<ListItemAvatar>
 													<Avatar sx={{ width: 50, height: 50 }} alt={ eachEmployee.Gender } src={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } />
 												</ListItemAvatar>
-												<ListItemText className={`flex-none max-[400px]:w-[8vw]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
+												<ListItemText className={`flex-none max-[400px]:w-[8vw] min-[800px]:w-[8vw]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
 												<ListItemText className={`flex justify-end`} primary = { eachEmployee.Gender === "Male" ? <Male  sx={{ color: '#21a8fa' }} /> : <Female  sx={{ color: '#e52264' }} /> } />
 											</ListItem>
 										</Paper>

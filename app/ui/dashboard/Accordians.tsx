@@ -54,7 +54,7 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 				<Typography>{ department.replaceAll("_", " ") + " : " + rowsData.length }</Typography>
 			</AccordionSummary>
 			<AccordionDetails className='sm:p-[2vh] md: p-[5vh]'>
-				<Masonry columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} spacing={2}>
+				<Masonry columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4 }} spacing={2}>
 					{ 
 						rowsData.map((eachEmployee: any, index: number) => (
 							<Card key={index} sx={{ maxWidth: 380, minWidth: 180, display: 'flex', flexDirection: 'column' }}>
