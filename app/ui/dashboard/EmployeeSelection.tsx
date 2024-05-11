@@ -316,7 +316,7 @@ export default function EmployeeSelection({ rowData }: any) {
 										xaxis: { categories: arrDataLabels },
 										legend: { show: true, position: 'top' }
 									}}
-									series={newArrData.series} type="bar" height={250} />
+									series={newArrData.series} type="bar" height={650} />
 							</div>
 						</div>
 					</Paper>
