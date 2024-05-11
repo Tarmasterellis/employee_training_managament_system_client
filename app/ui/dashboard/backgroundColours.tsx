@@ -11,6 +11,7 @@ import Github from '../../../public/icons/github.svg';
 import CSharp from '../../../public/icons/csharp.svg';
 import Docker from '../../../public/icons/docker.svg';
 import NodeJs from '../../../public/icons/node-js.svg';
+import Crowdin from '../../../public/icons/crowdin.svg';
 import Android from '../../../public/icons/android.svg';
 import Angular from '../../../public/icons/angular.svg';
 import Gherkin from '../../../public/icons/Gherkin.svg';
@@ -44,5 +45,6 @@ export const backgroundColors = {
 	Git: { backgroundColor:'#f34f29', color: '#FFFFFF', hours: 1, icon: Github.src },
 	Linux: { backgroundColor:'#ffcc33', color: '#2D333A', hours: 4, icon: Linux.src },
 	Docker: { backgroundColor:'#0db7ed', color: '#2D333A', hours: 8, icon: Docker.src },
+	Crowdin: { backgroundColor:'#30660f', color: '#FFFFFF', hours: 1, icon: Crowdin.src },
 	Kubernetes: { backgroundColor:'#326CE5', color: '#FFFFFF', hours: 15, icon: Kubernetes.src },
 };

@@ -68,9 +68,11 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 											</Grid>
 											<Grid item xs={3} sm={3} lg={4}>
 												<Tooltip title={` Total Training Hours of ${eachEmployee.Emp_Name} `} arrow TransitionComponent={Zoom} placement="bottom">
-													<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours" onClick={ () => handleVisibility(String(eachEmployee.Emp_Code)) } disabled={ eachEmployee.Total_Training_Hrs === 0 ? true : false }>
-														<Chip color={ eachEmployee.Total_Training_Hrs === 0 ? "error" : "success" } icon={<ModelTraining fontSize='small' />} label={ eachEmployee.Total_Training_Hrs } />
-													</IconButton>
+													<span>
+														<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours" onClick={ () => handleVisibility(String(eachEmployee.Emp_Code)) } disabled={ eachEmployee.Total_Training_Hrs === 0 ? true : false }>
+															<Chip color={ eachEmployee.Total_Training_Hrs === 0 ? "error" : "success" } icon={<ModelTraining fontSize='small' />} label={ eachEmployee.Total_Training_Hrs } />
+														</IconButton>
+													</span>
 												</Tooltip>
 											</Grid>
 											<Grid item xs={12} sm={5} lg={4}>

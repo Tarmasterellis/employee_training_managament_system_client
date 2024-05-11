@@ -1,15 +1,27 @@
+'use client';
+
+import * as React from 'react';
+import { CircularProgress, Paper } from '@mui/material';
 import EmployeeSelection from '../../ui/dashboard/EmployeeSelection';
 
-export default async function Page() {
+export default function Page() {
 
-	const response = await fetch("https://script.google.com/macros/s/AKfycbzNqziWBF3YvAZXR9F2sE7U_79wlOT9wrz-Yl1BSjGEVUl9IEQzeLX32dMq8OWq2X755g/exec");
-	const { data } = await response.json();
 
-	return (
-		<>
-			<div>
-				<EmployeeSelection rowData = { data } />
-			</div>
-		</>
-	);
+	const [data, setData]: any = React.useState(null);
+	const [isLoading, setLoading] = React.useState(true)
+
+	React.useLayoutEffect(() => {
+		fetch('https://script.google.com/macros/s/AKfycbyh6cISkAJMWKOmA_1I8Ke5Yte_146eOx8XClC6czbgpOnjAdEj8ia1iedpVYxam7Oh-A/exec')
+			.then((res) => res.json())
+			.then((data) => {
+				setData(data)
+				setTimeout(() => {
+					setLoading(false);
+				}, 4000);
+			})
+	}, []);
+
+	if (isLoading) return <Paper elevation={0} className={`flex justify-center items-center content-center w-full h-full`}> <CircularProgress /> </Paper>
+
+	return <div className={`mt-[-4vh]`}> <EmployeeSelection rowData = { data } /> </div>;
 }

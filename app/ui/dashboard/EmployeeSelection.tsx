@@ -1,21 +1,23 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import { createData } from './CreateData';
 import { CardSkeleton } from '../skeletons';
 import { styled, darken } from '@mui/system';
-import TextField from '@mui/material/TextField';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { BarChart } from '@mui/x-charts/BarChart';
-import Autocomplete from '@mui/material/Autocomplete';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import { backgroundColors } from './backgroundColours';
+import { FilterList, BarChart as BarChartIcon, MoreVert } from '@mui/icons-material';
+import { TextField, Autocomplete, Box, Paper, IconButton, Menu, MenuItem, ListItemIcon, ListItemText, Card } from '@mui/material';
+
 
 export default function EmployeeSelection({ rowData }: any) {
-	const rows: any = rowData;
+	const rows: any = rowData.data;
 
 	Object.keys(rowData).forEach((keys: any) => {
 		if (rowData[keys]['Emp Code'] !== undefined)
@@ -33,13 +35,30 @@ export default function EmployeeSelection({ rowData }: any) {
 	const [inputValue, setInputValue] = React.useState('');
 
 	let arr: any = [{}];
+	let arrData: any = [];
+	const arrDataColours: any = [];
+	const arrDataTextColours: any = [];
+	const arrDataLabels: any = [];
+	const newArrData: any = [{}];
 
 	rows.map((row: any) => {
 		row.Training_Topic.map((historyRow: any) => {
 			if (historyRow[Object.keys(historyRow)[0]] !== 0 && historyRow[Object.keys(historyRow)[0]] !== '0' && historyRow[Object.keys(historyRow)[0]] !== undefined && row.Emp_Name === value )
+			{
 				arr.push({ data: Number(historyRow[Object.keys(historyRow)[0]]), label: String(Object.keys(historyRow)[0]), backgroundColor: `${backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].backgroundColor}` });
+				arrData.push(Number(historyRow[Object.keys(historyRow)[0]]))
+				arrDataColours.push(backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].backgroundColor)
+				arrDataTextColours.push(backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].color)
+				arrDataLabels.push(Object.keys(historyRow)[0])
+				// arrData = arrData.sort(function(a: any, b: any) { return a - b; });
+			}
 		});
 	});
+
+	newArrData['series'] = [{}]
+	newArrData['series'][0]['data'] = arrData;
+	newArrData['series'][0]['name'] = '';
+	newArrData.shift();
 
 	let dataset: any = [{}];
 	let valuesCheck: Array<string> = [];
@@ -193,6 +212,12 @@ export default function EmployeeSelection({ rowData }: any) {
 							.backgroundColor
 					: '',
 			},
+			'& .MuiBarElement-root:nth-of-type(23)': {
+				fill: Object.keys(backgroundColors).includes(valuesCheck[22])
+					? backgroundColors[valuesCheck[22] as keyof typeof backgroundColors]
+							.backgroundColor
+					: '',
+			},
 			'& .MuiChartsAxis-tickLabel, .MuiChartsLegend-series text, .MuiChartsAxis-label':
 				{ fill: '#FFFFFF !important' },
 			'& .MuiChartsAxis-line, .MuiChartsAxis-tick': {
@@ -204,23 +229,20 @@ export default function EmployeeSelection({ rowData }: any) {
 	// Auto Complete Search with Group Options
 	const options = AllTeam.map((option: any) => {
 		const firstLetter = option.department.toUpperCase();
-		return {
-			firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-			...option,
-		};
+		return { firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter, ...option }
 	});
 
-	const GroupHeader = styled('div')(() => ({
-		position: 'sticky',
-		top: '-8px',
-		padding: '4px 10px',
-		color: '#FFFFFF',
-		backgroundColor: darken('#2D333A', 1),
-	}));
+	const GroupHeader = styled('div')(() => ({ position: 'sticky', top: '-8px', padding: '4px 10px', color: '#FFFFFF', backgroundColor: darken('#2D333A', 1) }));
 
-	const GroupItems = styled('ul')({
-		padding: 0,
-	});
+	const GroupItems = styled('ul')({ padding: 0 });
+
+	// Funnel Chart Needs
+	const optionsFunnel = [{ name: 'Bar Chart', icon: <BarChartIcon key={0} fontSize='small' /> }, { name: 'Funnel Chart', icon: <FilterList key={1} fontSize='small' /> }];	  
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [selectedC, setSelected] = React.useState('Bar Chart');
+	const openc = Boolean(anchorEl);
+	const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+	const handleClose = (event: any) => { setAnchorEl(null); setSelected(event.target.textContent); };
 
 	return (
 		<>
@@ -229,6 +251,7 @@ export default function EmployeeSelection({ rowData }: any) {
 					disableCloseOnSelect={false}
 					id="combo-box-demo"
 					value={value}
+					isOptionEqualToValue={(option, value) => option.label === value}
 					onChange={(event: any, newValue: any | null) => { setValue(newValue.label) }}
 					inputValue={inputValue}
 					onInputChange={(event, newInputValue) => { setInputValue(newInputValue) }}
@@ -253,12 +276,49 @@ export default function EmployeeSelection({ rowData }: any) {
 						)
 					}} />
 			</Box>
-			<div className={`h-[50vh] w-full p-5 ${dataset === undefined || dataset === null || dataset.length === 0 ? 'invisible hidden' : ''}`}>
+			<div className={`h-[83vh] w-full p-5 ${dataset === undefined || dataset === null || dataset.length === 0 ? 'invisible hidden' : ''}`}>
 				<React.Suspense fallback={<CardSkeleton />}>
-					<Paper elevation={2} className={`bg-[#2d333a] pl-3`}>
-						<BarChart
-							dataset={dataset}
-							xAxis={[{ scaleType: 'band', dataKey: 'label', label: 'Training Name', tickPlacement: 'middle', tickLabelPlacement: 'tick' }]} {...chartSetting} />
+					<Paper elevation={3} className={`pl-3 ${ selectedC === 'Bar Chart' ? 'bg-[#2d333a]' : 'bg-white'} h-full`}>
+						<div className={` relative ml-[89vw] z-10`}>
+							<IconButton aria-label="more" id="long-button" aria-controls={openc ? 'long-menu' : undefined} aria-expanded={openc ? 'true' : undefined} aria-haspopup="true" onClick={handleClick}>
+								<MoreVert className={`${ selectedC === 'Bar Chart' ? 'text-white' : 'text-[#2d333a]'} `} />
+							</IconButton>
+							<Menu id="long-menu" MenuListProps={{ 'aria-labelledby': 'long-button' }} anchorEl={anchorEl} open={openc} onClose={ (event: any) => handleClose(event) } PaperProps={{ style: { maxHeight: 48 * 4.5, width: '20ch', }}}>
+								{
+									optionsFunnel.map((option: any, index: number) => (
+										<MenuItem key = { index } selected = { option.name === selectedC } onClick = { handleClose }>
+											<ListItemIcon>
+												{ option.icon }
+											</ListItemIcon>
+											<ListItemText>{ option.name }</ListItemText>
+											<ListItemIcon>
+												
+											</ListItemIcon>
+										</MenuItem>
+									))
+								}
+							</Menu>
+						</div>
+						<div className={` ${ selectedC === 'Bar Chart' ? '' : 'hidden invisible' } `}>
+							<BarChart
+								dataset={dataset}
+								xAxis={[{ scaleType: 'band', dataKey: 'label', label: 'Training Name', tickPlacement: 'middle', tickLabelPlacement: 'tick' }]} {...chartSetting} />
+						</div>
+						<div className={` ${ selectedC !== 'Bar Chart' ? '' : 'hidden invisible' } flex justify-center items-center`}>
+							<div className={`w-[90%] mt-10`}>
+								<Chart options={
+									{
+										chart: { type: 'bar' },
+										plotOptions: { bar: { borderRadius: 0, horizontal: true, distributed: true, barHeight: '80%', isFunnel: true, }},
+										colors: arrDataColours,
+										dataLabels: { enabled: true, style: { colors: arrDataTextColours } },
+										title: { text: 'Training Hours', align: 'center' },
+										xaxis: { categories: arrDataLabels },
+										legend: { show: true, position: 'top' }
+									}}
+									series={newArrData.series} type="bar" height={250} />
+							</div>
+						</div>
 					</Paper>
 				</React.Suspense>
 			</div>

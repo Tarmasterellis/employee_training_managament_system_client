@@ -5,8 +5,8 @@ import { TimeLine } from './Timeline';
 import { createData } from './CreateData';
 import avatarm from '@/public/avatarm.svg';
 import avatarf from '@/public/avatarf.svg';
-import { DashboardCard, DashboardCardTwoIcons } from './dashboardCard';
 import { purple, green, blue } from '@mui/material/colors';
+import { DashboardCard, DashboardCardTwoIcons } from './dashboardCard';
 import { ExpandMore, CorporateFare, RememberMe, Male, Female, Groups, ModelTraining } from '@mui/icons-material';
 import { Card, CardMedia, CardContent, Grid, Typography, AccordionDetails, Accordion, Box, AccordionSummary, Chip } from '@mui/material';
 
@@ -25,7 +25,7 @@ export const GanttChart = ({ rowDataTrainer, rowData }: any) => {
 	Object.keys(rowDataTrainer).forEach((keys: any) => {
 		rowDataTrainer[keys].Emp_Code !== undefined && rowDataTrainer[keys].Emp_Code !== ''
 		?
-			rowsTrainer.push(createData(rowDataTrainer[keys].Emp_Code, rowDataTrainer[keys]['Emp_Name'], rowDataTrainer[keys]['Designation'], rowDataTrainer[keys]['Active_Inactive'], rowDataTrainer[keys]['Department'], rowDataTrainer[keys]['Training_Topic'], rowDataTrainer[keys]['Logic_Building'], rowDataTrainer[keys]['JavaScript_ES6'], rowDataTrainer[keys]['Git_Client'], rowDataTrainer[keys]['HTML'], rowDataTrainer[keys]['CSS'], rowDataTrainer[keys]['Bootstrap'], rowDataTrainer[keys]['SQL'], rowDataTrainer[keys]['HTTP_Protocols'], rowDataTrainer[keys]['NoSql_Database'], rowDataTrainer[keys]['couchBase'], rowDataTrainer[keys]['Angular'], rowDataTrainer[keys]['Rust'], rowDataTrainer[keys]['Node_JS'], rowDataTrainer[keys]['Android'], rowDataTrainer[keys]['IOS'], rowDataTrainer[keys]['CSharp'], rowDataTrainer[keys]['Kafka'], rowDataTrainer[keys]['Gherkin'], rowDataTrainer[keys]['Git'], rowDataTrainer[keys]['Linux'], rowDataTrainer[keys]['Docker'], rowDataTrainer[keys]['Kubernetes'], rowDataTrainer[keys]['Total_Training_Hrs'], rowDataTrainer[keys]['Gender'], rowDataTrainer[keys]['Photo_URL']))
+			rowsTrainer.push(createData(rowDataTrainer[keys].Emp_Code, rowDataTrainer[keys]['Emp_Name'], rowDataTrainer[keys]['Designation'], rowDataTrainer[keys]['Active_Inactive'], rowDataTrainer[keys]['Department'], rowDataTrainer[keys]['Training_Topic'], rowDataTrainer[keys]['Logic_Building'], rowDataTrainer[keys]['JavaScript_ES6'], rowDataTrainer[keys]['Git_Client'], rowDataTrainer[keys]['HTML'], rowDataTrainer[keys]['CSS'], rowDataTrainer[keys]['Bootstrap'], rowDataTrainer[keys]['SQL'], rowDataTrainer[keys]['HTTP_Protocols'], rowDataTrainer[keys]['NoSql_Database'], rowDataTrainer[keys]['couchBase'], rowDataTrainer[keys]['Angular'], rowDataTrainer[keys]['Rust'], rowDataTrainer[keys]['Node_JS'], rowDataTrainer[keys]['Android'], rowDataTrainer[keys]['IOS'], rowDataTrainer[keys]['CSharp'], rowDataTrainer[keys]['Kafka'], rowDataTrainer[keys]['Gherkin'], rowDataTrainer[keys]['Git'], rowDataTrainer[keys]['Linux'], rowDataTrainer[keys]['Docker'], rowData[keys]['Crowdin'], rowDataTrainer[keys]['Kubernetes'], rowDataTrainer[keys]['Total_Training_Hrs'], rowDataTrainer[keys]['Gender'], rowDataTrainer[keys]['Photo_URL']))
 		:
 			null
 	});
@@ -38,7 +38,7 @@ export const GanttChart = ({ rowDataTrainer, rowData }: any) => {
 				{
 					if(rowData[keys]['Active_Inactive'] !== 'Left')
 					{
-						rowsAll.push(createData(rowData[keys]['Emp_Code'], rowData[keys]['Emp_Name'], rowData[keys]['Designation'], rowData[keys]['Active_Inactive'], rowData[keys]['Department'], rowData[keys]['Training_Topic'], rowData[keys]['Logic_Building'], rowData[keys]['JavaScript_ES6'], rowData[keys]['Git_Client'], rowData[keys]['HTML'], rowData[keys]['CSS'], rowData[keys]['Bootstrap'], rowData[keys]['SQL'], rowData[keys]['HTTP_Protocols'], rowData[keys]['NoSql_Database'], rowData[keys]['couchBase'], rowData[keys]['Angular'], rowData[keys]['Rust'], rowData[keys]['Node_JS'], rowData[keys]['Android'], rowData[keys]['IOS'], rowData[keys]['CSharp'], rowData[keys]['Kafka'], rowData[keys]['Gherkin'], rowData[keys]['Git'], rowData[keys]['Linux'], rowData[keys]['Docker'], rowData[keys]['Kubernetes'], rowData[keys]['Total_Training_Hrs'], rowData[keys]['Gender'], rowData[keys]['Photo_URL']));
+						rowsAll.push(createData(rowData[keys]['Emp_Code'], rowData[keys]['Emp_Name'], rowData[keys]['Designation'], rowData[keys]['Active_Inactive'], rowData[keys]['Department'], rowData[keys]['Training_Topic'], rowData[keys]['Logic_Building'], rowData[keys]['JavaScript_ES6'], rowData[keys]['Git_Client'], rowData[keys]['HTML'], rowData[keys]['CSS'], rowData[keys]['Bootstrap'], rowData[keys]['SQL'], rowData[keys]['HTTP_Protocols'], rowData[keys]['NoSql_Database'], rowData[keys]['couchBase'], rowData[keys]['Angular'], rowData[keys]['Rust'], rowData[keys]['Node_JS'], rowData[keys]['Android'], rowData[keys]['IOS'], rowData[keys]['CSharp'], rowData[keys]['Kafka'], rowData[keys]['Gherkin'], rowData[keys]['Git'], rowData[keys]['Linux'], rowData[keys]['Docker'], rowData[keys]['Crowdin'], rowData[keys]['Kubernetes'], rowData[keys]['Total_Training_Hrs'], rowData[keys]['Gender'], rowData[keys]['Photo_URL']));
 						totalTrainingHours += rowData[keys]['Total_Training_Hrs'];
 					}
 					else leftEmployees += 1;
