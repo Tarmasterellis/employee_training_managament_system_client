@@ -19,7 +19,7 @@ export default function Page() {
 				setData(data)
 				setTimeout(() => {
 					setLoading(false);
-				}, 4000);
+				}, 1000);
 			})
 	}, []);
 
@@ -32,9 +32,6 @@ export default function Page() {
 
 		else if (data.data[item].Active_Inactive !== 'left') rowData.push( data.data[item] )
 	}
-
-	console.log(rowData);
-	console.log(finalSheetdataObjectTrainer);
 
 	return (
 		<main>
