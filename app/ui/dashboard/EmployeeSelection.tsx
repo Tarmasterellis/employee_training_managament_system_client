@@ -273,7 +273,7 @@ export default function EmployeeSelection({ rowData }: any) {
 						}} />
 				</Box>
 				<div className={`max-[700px]:mt-2`}>
-					<Button size='large' value={selectedC} variant='contained' endIcon={ selectedC === 'Bar Chart' ? <BarChartIcon fontSize='small' /> : <FilterList fontSize='small' /> } onClick={ (event) => handleClick(event) }>
+					<Button size='large' value={selectedC} variant='contained' endIcon={ selectedC === 'Bar Chart' ? <FilterList /> : <BarChartIcon /> } onClick={ (event) => handleClick(event) }>
 						Change Chart Design To
 					</Button>
 				</div>

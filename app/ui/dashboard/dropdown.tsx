@@ -8,8 +8,8 @@ import { createData } from './CreateData';
 import Grid from '@mui/material/Unstable_Grid2';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { backgroundColors } from './backgroundColours';
-import { KeyboardArrowUp, KeyboardArrowDown, FilterList, BarChart as BarChartIcon, MoreVert } from '@mui/icons-material';
-import { Box, Chip, Table, Paper, Collapse, TableRow, TableBody, TableCell, TableHead, IconButton, Typography, TableContainer, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { KeyboardArrowUp, KeyboardArrowDown, FilterList, BarChart as BarChartIcon } from '@mui/icons-material';
+import { Box, Chip, Table, Paper, Collapse, TableRow, TableBody, TableCell, TableHead, IconButton, Typography, TableContainer, Button } from '@mui/material';
 
 
 function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
@@ -47,27 +47,8 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 
 	const valueFormatter = (value: number | null) => `${value}`;
 
-	const options = [
-		{
-			name: 'Bar Chart',
-			icon: <BarChartIcon key={0} fontSize='small' />,
-		},
-		{
-			name: 'Funnel Chart',
-			icon: <FilterList key={1} fontSize='small' />,
-		},
-	];
-
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const [selectedC, setSelected] = React.useState('Bar Chart');
-	const openc = Boolean(anchorEl);
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = (event: any) => {
-		setAnchorEl(null);
-		setSelected(event.target.textContent);
-	};
+	const handleClick = (event: any) => setSelected(event.target.value === 'Bar Chart' ? 'Funnel Chart' : 'Bar Chart');
 	
 	return (
 		<>
@@ -100,28 +81,13 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 											}
 										</Grid>
 									</Grid>
-									<Grid xs={12} md={9} lg={8} className={`flex justify-center items-center self-center`}>
-										<div className={` relative z-10 ${selectedC !== 'Bar Chart' ? 'top-[-120px] left-[320px]' : 'top-[-100px] left-[340px]' }`}>
-											<IconButton aria-label="more" id="long-button" aria-controls={openc ? 'long-menu' : undefined} aria-expanded={openc ? 'true' : undefined} aria-haspopup="true" onClick={handleClick}>
-												<MoreVert />
-											</IconButton>
-											<Menu id="long-menu" MenuListProps={{ 'aria-labelledby': 'long-button' }} anchorEl={anchorEl} open={openc} onClose={ (event: any) => handleClose(event) } PaperProps={{ style: { maxHeight: 48 * 4.5, width: '20ch', }}}>
-												{
-													options.map((option: any, index: number) => (
-														<MenuItem key = { index } selected = { option.name === selectedC } onClick = { handleClose }>
-															<ListItemIcon>
-																{ option.icon }
-															</ListItemIcon>
-															<ListItemText>{ option.name }</ListItemText>
-															<ListItemIcon>
-																
-															</ListItemIcon>
-														</MenuItem>
-													))
-												}
-											</Menu>
+									<Grid xs={12} md={9} lg={8} className={`flex justify-center items-center self-center flex-col`}>
+										<div>
+											<Button variant='outlined' endIcon={ selectedC === 'Bar Chart' ? <FilterList /> : <BarChartIcon /> } value={ selectedC } onClick={ (event) => handleClick(event) }>
+												Change Chart Design To
+											</Button>
 										</div>
-										<div className={` ${ selectedC === 'Bar Chart' ? '' : 'hidden invisible' }`}>
+										<div className={` ${ selectedC === 'Bar Chart' ? '' : 'hidden invisible' } w-full flex`}>
 											<BarChart dataset={arr} yAxis={[{ scaleType: 'band', dataKey: 'label' }]} series= {[{dataKey: 'data', label: 'Hours Of Training', valueFormatter }]} layout="horizontal" {...chartSetting} />
 										</div>
 										<div className={` ${ selectedC !== 'Bar Chart' ? '' : 'hidden invisible' } `}>
