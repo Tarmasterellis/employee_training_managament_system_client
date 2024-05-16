@@ -12,8 +12,8 @@ import match from 'autosuggest-highlight/match';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import { backgroundColors } from './backgroundColours';
-import { FilterList, BarChart as BarChartIcon, MoreVert } from '@mui/icons-material';
-import { TextField, Autocomplete, Box, Paper, IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { FilterList, BarChart as BarChartIcon } from '@mui/icons-material';
+import { TextField, Autocomplete, Box, Paper, Button } from '@mui/material';
 
 
 export default function EmployeeSelection({ rowData }: any) {
@@ -236,72 +236,56 @@ export default function EmployeeSelection({ rowData }: any) {
 	const GroupItems = styled('ul')({ padding: 0 });
 
 	// Funnel Chart Needs
-	const optionsFunnel = [{ name: 'Bar Chart', icon: <BarChartIcon key={0} fontSize='small' /> }, { name: 'Funnel Chart', icon: <FilterList key={1} fontSize='small' /> }];	  
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const [selectedC, setSelected] = React.useState('Bar Chart');
-	const openc = Boolean(anchorEl);
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
-	const handleClose = (event: any) => { setAnchorEl(null); setSelected(event.target.textContent); };
+	const handleClick = (event: any) => setSelected(event.target.value === 'Bar Chart' ? 'Funnel Chart' : 'Bar Chart');
 
 	return (
 		<>
-			<Box sx={{ minWidth: 120 }}>
-				<Autocomplete
-					disableCloseOnSelect={false}
-					id="combo-box-demo"
-					value={value}
-					isOptionEqualToValue={(option, value) => option.label === value}
-					onChange={(event: any, newValue: any | null) => { setValue(newValue.label) }}
-					inputValue={inputValue}
-					onInputChange={(event, newInputValue) => { setInputValue(newInputValue) }}
-					options={options.sort( ( a: any, b: any) => -b.firstLetter.localeCompare(a.firstLetter) )}
-					groupBy={(option) => option.firstLetter}
-					renderInput={(params) => ( <TextField {...params} label="Employee Name" /> )}
-					renderGroup={(params) => (
-						<li key={params.key}>							
-							<GroupHeader>{params.group}</GroupHeader>
-							<GroupItems>{params.children}</GroupItems>
-						</li>
-					)}
-					renderOption={(props, option, { inputValue }) => {
-						const matches = match(option.label, inputValue, { insideWords: true });
-						const parts = parse(option.label, matches);
-						return (
-							<li {...props}>
-								<div>
-									{ parts.map((part: any, index: number) => ( <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}> { part.text } </span> )) }
-								</div>
+			<div className={`flex justify-between items-center max-[700px]:mt-5 max-[700px]:flex-col`}>
+				<Box sx={{ minWidth: 120, width: '80vw' }}>
+					<Autocomplete
+						disableCloseOnSelect={false}
+						id="combo-box-demo"
+						value={value}
+						isOptionEqualToValue={(option, value) => option.label === value}
+						onChange={(event: any, newValue: any | null) => { setValue(newValue.label) }}
+						inputValue={inputValue}
+						onInputChange={(event, newInputValue) => { setInputValue(newInputValue) }}
+						options={options.sort( ( a: any, b: any) => -b.firstLetter.localeCompare(a.firstLetter) )}
+						groupBy={(option) => option.firstLetter}
+						renderInput={(params) => ( <TextField {...params} label="Employee Name" /> )}
+						renderGroup={(params) => (
+							<li key={params.key}>							
+								<GroupHeader>{params.group}</GroupHeader>
+								<GroupItems>{params.children}</GroupItems>
 							</li>
-						)
-					}} />
-			</Box>
+						)}
+						renderOption={(props, option, { inputValue }) => {
+							const matches = match(option.label, inputValue, { insideWords: true });
+							const parts = parse(option.label, matches);
+							return (
+								<li {...props}>
+									<div>
+										{ parts.map((part: any, index: number) => ( <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}> { part.text } </span> )) }
+									</div>
+								</li>
+							)
+						}} />
+				</Box>
+				<div className={`max-[700px]:mt-2`}>
+					<Button size='large' value={selectedC} variant='contained' endIcon={ selectedC === 'Bar Chart' ? <BarChartIcon fontSize='small' /> : <FilterList fontSize='small' /> } onClick={ (event) => handleClick(event) }>
+						Change Chart Design To
+					</Button>
+				</div>
+			</div>
 			<div className={`h-[83vh] w-full p-5 ${dataset === undefined || dataset === null || dataset.length === 0 ? 'invisible hidden' : ''}`}>
 				<React.Suspense fallback={<CardSkeleton />}>
-					<Paper elevation={3} className={`pl-3 ${ selectedC === 'Bar Chart' ? 'bg-[#2d333a]' : 'bg-white'} h-full`}>
-						<div className={` relative ml-[89vw] z-10`}>
-							<IconButton aria-label="more" id="long-button" aria-controls={openc ? 'long-menu' : undefined} aria-expanded={openc ? 'true' : undefined} aria-haspopup="true" onClick={handleClick}>
-								<MoreVert className={`${ selectedC === 'Bar Chart' ? 'text-white' : 'text-[#2d333a]'} `} />
-							</IconButton>
-							<Menu id="long-menu" MenuListProps={{ 'aria-labelledby': 'long-button' }} anchorEl={anchorEl} open={openc} onClose={ (event: any) => handleClose(event) } PaperProps={{ style: { maxHeight: 48 * 4.5, width: '20ch', }}}>
-								{
-									optionsFunnel.map((option: any, index: number) => (
-										<MenuItem key = { index } selected = { option.name === selectedC } onClick = { handleClose }>
-											<ListItemIcon>
-												{ option.icon }
-											</ListItemIcon>
-											<ListItemText>{ option.name }</ListItemText>
-											<ListItemIcon>
-												
-											</ListItemIcon>
-										</MenuItem>
-									))
-								}
-							</Menu>
-						</div>
+					<Paper elevation={3} className={`pl-3 ${ selectedC === 'Bar Chart' ? 'bg-[#2d333a]' : 'bg-white'}`}>
 						<div className={` ${ selectedC === 'Bar Chart' ? '' : 'hidden invisible' } `}>
 							<BarChart
 								dataset={dataset}
-								xAxis={[{ scaleType: 'band', dataKey: 'label', label: 'Training Name', tickPlacement: 'middle', tickLabelPlacement: 'tick' }]} {...chartSetting} />
+								xAxis={[{ scaleType: 'band', dataKey: 'label', label: 'Training Name', tickPlacement: 'middle', tickLabelPlacement: 'tick' }]} {...chartSetting}
+								/>
 						</div>
 						<div className={` ${ selectedC !== 'Bar Chart' ? '' : 'hidden invisible' } flex justify-center items-center`}>
 							<div className={`w-[90%] mt-10`}>
@@ -319,6 +303,7 @@ export default function EmployeeSelection({ rowData }: any) {
 							</div>
 						</div>
 					</Paper>
+					<br />
 				</React.Suspense>
 			</div>
 		</>
