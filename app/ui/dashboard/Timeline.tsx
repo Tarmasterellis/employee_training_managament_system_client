@@ -28,13 +28,5 @@ export const TimeLine = ({ rows }: any) => {
 		})
 	})
 
-	return (
-		<>
-			{
-				departmentNames.map((eachDepartment: string, index: number) => (
-						<Accordians key={index} rowsData={departmentNamesArray[index]} department={eachDepartment} expanded = { expanded } handleChange = { handleChange } />
-				))
-			}
-		</>
-	)
+	return departmentNames.map((eachDepartment: string, index: number) => <Accordians key={index} rowsData={departmentNamesArray[index]} department={eachDepartment} expanded = { expanded } handleChange = { handleChange } />)
 }

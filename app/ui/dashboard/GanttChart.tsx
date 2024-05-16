@@ -147,70 +147,70 @@ export const GanttChart = ({ rowDataTrainer, rowData }: any) => {
 						<Masonry columns={{ xs: 1, sm: 1, md: 2 }} spacing={2}>
 							{
 								rowsTrainer.map((eachEmployee: any, index: number) => (
-										<Card key={ index } sx={{ display: 'flex', minWidth: 350 }}>
-											<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-												<CardContent sx={{ flex: '1 0 auto' }}>
-													<Typography component="div" variant="h5"> { eachEmployee.Emp_Name + " - " + eachEmployee.Designation } </Typography>
-													<Typography variant="subtitle2" color="text.secondary" component="div" sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-													<Masonry key={ index } columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} spacing={2}>
-														<Chip color="info" icon={<RememberMe fontSize='small' />} label={ eachEmployee.Emp_Code } />
-														<Chip color={ eachEmployee.Gender === "Male" ? "error" : "success" } icon={ eachEmployee.Gender === "Male" ? <Male /> : <Female /> } label={ eachEmployee.Gender } />
-														<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ eachEmployee.Department } />
-														<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours" onClick={ () => handleVisibility(String(eachEmployee.Emp_Code)) }>
-															<Chip color="success" icon={
-																<CardMedia sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', mt: 2, pl:0.5 }}>
-																	<ModelTraining fontSize='small' sx={{ mt: 1 }} />
-																	<Groups fontSize='small' sx={{ mt: -1 }} />,
-																</CardMedia>
-															} label= { eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ? totalTrainingHoursEllis : totalTrainingHoursAman } />
-														</IconButton>
+									<Card key={ index } sx={{ display: 'flex', minWidth: 350 }}>
+										<Box sx={{ display: 'flex', flexDirection: 'column' }}>
+											<CardContent sx={{ flex: '1 0 auto' }}>
+												<Typography component="div" variant="h5"> { eachEmployee.Emp_Name + " - " + eachEmployee.Designation } </Typography>
+												<Typography variant="subtitle2" color="text.secondary" component="div" sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+												<Masonry key={ index } columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} spacing={2}>
+													<Chip color="info" icon={<RememberMe fontSize='small' />} label={ eachEmployee.Emp_Code } />
+													<Chip color={ eachEmployee.Gender === "Male" ? "error" : "success" } icon={ eachEmployee.Gender === "Male" ? <Male /> : <Female /> } label={ eachEmployee.Gender } />
+													<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ eachEmployee.Department } />
+													<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours" onClick={ () => handleVisibility(String(eachEmployee.Emp_Code)) }>
+														<Chip color="success" icon={
+															<CardMedia sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', mt: 2, pl:0.5 }}>
+																<ModelTraining fontSize='small' sx={{ mt: 1 }} />
+																<Groups fontSize='small' sx={{ mt: -1 }} />,
+															</CardMedia>
+														} label= { eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ? totalTrainingHoursEllis : totalTrainingHoursAman } />
+													</IconButton>
+												</Masonry>
+												</Typography>
+												<Typography component="div" id={String(eachEmployee.Emp_Code)} style={{ display: 'none', visibility: 'hidden' }}>
+													<PieChart
+														colors={ eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ? paletteE : paletteA }
+														series={[{
+															data: eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ? dataEllis : dataAman,
+															innerRadius: 30,
+															outerRadius: 100,
+															paddingAngle: 5,
+															cornerRadius: 5,
+															startAngle: 0,
+															endAngle: 360,
+															highlightScope: { faded: 'global', highlighted: 'item' }, faded: { innerRadius: 30, additionalRadius: -30, color: '#2d333a' }
+														}]}
+														slotProps={{ legend: { seriesToDisplay: [] } }}
+														height={200}
+													/>
+													<span>Training Given On</span>
+													<Masonry columns={{ xs: 1, md: 9}} spacing={2} className='mt-2'>
+														{
+															eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ?
+																dataEllis.map((item: any, index: number) => 
+																	<Tooltip key={index + 1} title={ item.label }>
+																		<Chip
+																			style={{ backgroundColor: item.backgroundColorss, color: item.colors, paddingLeft: 12, width: 35, height: 35 }}
+																			avatar={ <Avatar alt={ item.label } src= { item.icon } /> }
+																		/>
+																	</Tooltip>
+																)
+															:
+																dataAman.map((item: any, index: number) => 
+																	<Tooltip key={index + 1} title={ item.label }>
+																		<Chip key={index + 2}
+																			style={{ backgroundColor: item.backgroundColorss, color: item.colors, paddingLeft: 12, width: 35, height: 35 }}
+																			avatar={ <Avatar sizes='small' alt={ item.label } src= { item.icon } /> }
+																		/>
+																	</Tooltip>
+																)
+																
+														}
 													</Masonry>
-													</Typography>
-													<Typography component="div" id={String(eachEmployee.Emp_Code)} style={{ display: 'none', visibility: 'hidden' }}>
-														<PieChart
-															colors={ eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ? paletteE : paletteA }
-															series={[{
-																data: eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ? dataEllis : dataAman,
-																innerRadius: 30,
-																outerRadius: 100,
-																paddingAngle: 5,
-																cornerRadius: 5,
-																startAngle: 0,
-																endAngle: 360,
-																highlightScope: { faded: 'global', highlighted: 'item' }, faded: { innerRadius: 30, additionalRadius: -30, color: '#2d333a' }
-															}]}
-															slotProps={{ legend: { seriesToDisplay: [] } }}
-															height={200}
-														/>
-														<span>Training Given On</span>
-														<Masonry columns={{ xs: 1, md: 9}} spacing={2} className='mt-2'>
-															{
-																eachEmployee.Emp_Name === 'Ellis Sanjay Tarmaster' ?
-																	dataEllis.map((item: any, index: number) => 
-																		<Tooltip key={index + 1} title={ item.label }>
-																			<Chip
-																				style={{ backgroundColor: item.backgroundColorss, color: item.colors, paddingLeft: 12, width: 35, height: 35 }}
-																				avatar={ <Avatar alt={ item.label } src= { item.icon } /> }
-																			/>
-																		</Tooltip>
-																	)
-																:
-																	dataAman.map((item: any, index: number) => 
-																		<Tooltip key={index + 1} title={ item.label }>
-																			<Chip key={index + 2}
-																				style={{ backgroundColor: item.backgroundColorss, color: item.colors, paddingLeft: 12, width: 35, height: 35 }}
-																				avatar={ <Avatar sizes='small' alt={ item.label } src= { item.icon } /> }
-																			/>
-																		</Tooltip>
-																	)
-																	
-															}
-														</Masonry>
-													</Typography>
-												</CardContent>
-											</Box>
-											<CardMedia className={``} component="img" sx={{ width: 350, position: 'relative', right: `${eachEmployee.Emp_Name === 'Aman Verasia' ? '-4.7vw' : '-0.2vw' }` }} image={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } alt={ eachEmployee.Emp_Name } />
-										</Card>
+												</Typography>
+											</CardContent>
+										</Box>
+										<CardMedia className={``} component="img" sx={{ width: 350, position: 'relative', right: `${eachEmployee.Emp_Name === 'Aman Verasia' ? '-4.7vw' : '-0.2vw' }` }} image={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } alt={ eachEmployee.Emp_Name } />
+									</Card>
 								))
 							}
 						</Masonry>

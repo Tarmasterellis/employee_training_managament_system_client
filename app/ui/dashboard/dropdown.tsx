@@ -34,7 +34,6 @@ function Row(props: { row: ReturnType<typeof createData>, indexKey: number }) {
 			arrDataColours.push(backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].backgroundColor)
 			arrDataTextColours.push(backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].color)
 			arrDataLabels.push(Object.keys(historyRow)[0])
-			// arrData = arrData.sort(function(a: any, b: any) { return a - b; });
 		}
 		newArrData['series'] = [{}]
 		newArrData['series'][0]['data'] = arrData;

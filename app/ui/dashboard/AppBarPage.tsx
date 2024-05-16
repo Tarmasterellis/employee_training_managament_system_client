@@ -1,4 +1,3 @@
-
 import { signOut } from '@/auth';
 import AppBar from '@mui/material/AppBar';
 import Tooltip from '@mui/material/Tooltip';

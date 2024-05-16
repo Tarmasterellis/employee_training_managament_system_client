@@ -14,12 +14,7 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 
 	const empCodes: Array<string> = [];
 
-	rowsData.forEach((row: any) => {
-		if (row.Active_Inactive !== 'Left')
-		{
-			empCodes.push(row.Emp_Code);
-		}
-	});
+	rowsData.forEach((row: any) => { if (row.Active_Inactive !== 'Left') empCodes.push(row.Emp_Code); });
 
 	const handleVisibility = (cardNumber: string) => {
 		let visible = document.getElementById(cardNumber);
@@ -57,17 +52,17 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 				<Masonry columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4 }} spacing={2}>
 					{ 
 						rowsData.map((eachEmployee: any, index: number) => (
-							<Card key={index} sx={{ maxWidth: 380, minWidth: 180, display: 'flex', flexDirection: 'column' }}>
+							<Card key={index} sx={{ maxWidth: 400, minWidth: 180, display: 'flex', flexDirection: 'column' }}>
 								<CardHeader avatar={ <Avatar sx={{ bgcolor: blue[500] }}>{ eachEmployee.Emp_Name.split(" ")[0][0] + eachEmployee.Emp_Name.split(" ")[1][0] }</Avatar> } title={ eachEmployee.Emp_Name } subheader={"Designation - " + eachEmployee.Designation} />								
 								<CardMedia component="img" height="194" image={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } alt={ eachEmployee.Emp_Name } />
 								<CardContent sx={{ flex: '1 0 auto' }}>
 									<Typography component="div" sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-										<Grid container spacing={2}>
+										<Grid container spacing={3}>
 											<Grid item xs={7} sm={4} lg={4}>
 												<Chip color="info" icon={<RememberMe fontSize='small' />} label={ eachEmployee.Emp_Code } />
 											</Grid>
-											<Grid item xs={3} sm={3} lg={4}>
-												<Tooltip title={` Total Training Hours of ${eachEmployee.Emp_Name} `} arrow TransitionComponent={Zoom} placement="bottom">
+											<Grid item xs={3} sm={3} lg={3}>
+												<Tooltip title={ eachEmployee.Total_Training_Hrs === 0 ? 'No Training data Found...!' : `Total Training Hours of ${eachEmployee.Emp_Name} - ${eachEmployee.Total_Training_Hrs}` } arrow TransitionComponent={Zoom} placement="bottom">
 													<span>
 														<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours" onClick={ () => handleVisibility(String(eachEmployee.Emp_Code)) } disabled={ eachEmployee.Total_Training_Hrs === 0 ? true : false }>
 															<Chip color={ eachEmployee.Total_Training_Hrs === 0 ? "error" : "success" } icon={<ModelTraining fontSize='small' />} label={ eachEmployee.Total_Training_Hrs } />
@@ -75,7 +70,7 @@ export const Accordians = ({rowsData, department, expanded, handleChange}: any) 
 													</span>
 												</Tooltip>
 											</Grid>
-											<Grid item xs={12} sm={5} lg={4}>
+											<Grid item xs={12} sm={5} lg={5}>
 												<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ eachEmployee.Department } />
 											</Grid>
 										</Grid>

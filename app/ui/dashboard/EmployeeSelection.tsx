@@ -13,7 +13,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import { backgroundColors } from './backgroundColours';
 import { FilterList, BarChart as BarChartIcon, MoreVert } from '@mui/icons-material';
-import { TextField, Autocomplete, Box, Paper, IconButton, Menu, MenuItem, ListItemIcon, ListItemText, Card } from '@mui/material';
+import { TextField, Autocomplete, Box, Paper, IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 
 
 export default function EmployeeSelection({ rowData }: any) {
@@ -50,7 +50,6 @@ export default function EmployeeSelection({ rowData }: any) {
 				arrDataColours.push(backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].backgroundColor)
 				arrDataTextColours.push(backgroundColors[Object.keys(historyRow)[0] as keyof typeof backgroundColors].color)
 				arrDataLabels.push(Object.keys(historyRow)[0])
-				// arrData = arrData.sort(function(a: any, b: any) { return a - b; });
 			}
 		});
 	});

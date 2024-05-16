@@ -5,9 +5,9 @@ import { Masonry } from '@mui/lab';
 import avatarm from '@/public/avatarm.svg';
 import avatarf from '@/public/avatarf.svg';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { Male, Female, RememberMe, CorporateFare, ModelTraining, Groups, ArrowDropDown } from '@mui/icons-material';
 import { backgroundColors } from './backgroundColours';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Avatar, CardMedia, Typography, Card, CardContent, ListItem, ListItemAvatar, ListItemText, Chip, Paper, ButtonBase, Box, IconButton, Tooltip, Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material/';
+import { Male, Female, RememberMe, CorporateFare, Face, Face3 } from '@mui/icons-material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Avatar, CardMedia, Typography, Card, CardContent, ListItem, ListItemAvatar, ListItemText, Chip, Paper, ButtonBase, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material/';
 
 
 export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
@@ -16,6 +16,7 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 
 	const [data, setData]: any = React.useState([]);
 	const [palette, setPalette]: any = React.useState([]);
+	const [totalTrainingHours, setTotalTrainingHours]: any = React.useState(null);
 	const [openChild, setOpenChild] = React.useState(false);
 	const [passedEmployees, setpassedEmployees]: any = React.useState([{}]);
 
@@ -30,11 +31,11 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 		const paletteValues: any = [];
 		let counter = 0;
 
-		Object.keys(passedEmployee['Training_Topic']).map((trainingKeys: any, index: number) => {
-			Object.keys(passedEmployee['Training_Topic'][trainingKeys]).map((trainingName: any, indexx: number) => {
+		Object.keys(passedEmployee['Training_Topic']).map((trainingKeys: any) => {
+			Object.keys(passedEmployee['Training_Topic'][trainingKeys]).map((trainingName: any) => {
 				if(passedEmployee['Training_Topic'][trainingKeys][trainingName] !== 0)
 				{
-					dataValues.push({ id: counter, value: passedEmployee['Training_Topic'][trainingKeys][trainingName], label: backgroundColors[trainingName as keyof typeof backgroundColors].name, icon: backgroundColors[trainingName as keyof typeof backgroundColors].icon, backgroundColorss: backgroundColors[trainingName as keyof typeof backgroundColors].backgroundColor, colors: backgroundColors[trainingName as keyof typeof backgroundColors].color  });
+					dataValues.push({ id: counter, value: passedEmployee['Training_Topic'][trainingKeys][trainingName], label: backgroundColors[trainingName as keyof typeof backgroundColors].name, icon: backgroundColors[trainingName as keyof typeof backgroundColors].icon, backgroundColorss: backgroundColors[trainingName as keyof typeof backgroundColors].backgroundColor, colors: backgroundColors[trainingName as keyof typeof backgroundColors].color });
 					paletteValues.push(backgroundColors[trainingName as keyof typeof backgroundColors].backgroundColor);
 				}
 			});
@@ -42,6 +43,8 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 			setData(dataValues);
 			setPalette(paletteValues);
 		});
+
+		setTotalTrainingHours(passedEmployee['Total_Training_Hrs']);
 
 		setOpenChild(!openChild);
 	}
@@ -90,16 +93,16 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 								<Chip sx={{ backgroundColor: "#e52264", color: "#FFFFFF" }} icon={ <Female sx={{ color: '#FFFFFF !important' }} /> } label = { femaleCount } />
 							</span>
 						</DialogTitle>
-						<Masonry columns={{ xs: 1, sm: 2, md: 2, lg: 3 }} spacing={2}>
+						<Masonry columns={{ xs: 1, sm: 2, lg: 3 }} spacing={2}>
 							{
 								trainingTopics.map((eachEmployee: any, index: number) =>
 									<ButtonBase key={index} onClick={ () => handleModalClick(eachEmployee) }>
-										<Paper sx={{ padding: 1 }} elevation={2}>
+										<Paper sx={{ padding: 1, width: '95%' }} elevation={2}>
 											<ListItem disableGutters sx={{ pl: 2, pr: 2 }} secondaryAction = { eachEmployee.Gender === "Male" ? <Male  sx={{ color: '#21a8fa' }} /> : <Female  sx={{ color: '#e52264' }} /> }>
 												<ListItemAvatar>
 													<Avatar sx={{ width: 50, height: 50 }} alt={ eachEmployee.Gender } src={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } />
 												</ListItemAvatar>
-												<ListItemText className={`flex-none max-[400px]:w-[8vw] min-[800px]:w-[8vw]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
+												<ListItemText className={`flex-none w-[100%]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
 											</ListItem>
 										</Paper>
 									</ButtonBase>
@@ -109,65 +112,65 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 					</Dialog>
 			}
 
-			<Dialog fullWidth={ true } maxWidth={'lg'} open={openChild} onClose={handleCloseChild} aria-labelledby="dialog-Employees">
-				<DialogTitle id="dialog-Employees" sx={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center' }}> Employee Details </DialogTitle>
-				<DialogContent>
-					<Card sx={{ display: 'flex', minWidth: 350 }} elevation={0}>
-						<CardMedia className={``} component="img" sx={{ width: data.length > 0 ? 400 : 200, borderRadius: '2%' }} image={ passedEmployees.Photo_URL === "photo" ? passedEmployees.Gender === "Male" ? avatarm.src : avatarf.src : passedEmployees.Photo_URL } alt={ passedEmployees.Emp_Name } />
-						<CardContent sx={{ flex: '1 0 auto' }}>
-							<Typography component="div" variant="h5"> { passedEmployees.Emp_Name + " - " + passedEmployees.Designation } </Typography>
-							<Typography variant="subtitle2" color="text.secondary" component="div" sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-							<Masonry columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} spacing={2}>
-								<Chip color="info" icon={<RememberMe fontSize='small' />} label={ passedEmployees.Emp_Code } />
-								<Chip sx={{ backgroundColor: passedEmployees.Gender === "Male" ? "#21a8fa" : "#e52264", color: '#FFFFFF' }} icon={ passedEmployees.Gender === "Male" ? <Male sx={{ color: '#FFFFFF !important' }} /> : <Female sx={{ color: '#FFFFFF !important' }} /> } label={ passedEmployees.Gender } />
-								<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ passedEmployees.Department } />
-								<IconButton sx={{ padding: 0.2 }} aria-label="Completed Training Hours">
-									<Chip color="success" icon={
-										<CardMedia sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', mt: 2, pl:0.5 }}>
-											<ModelTraining fontSize='small' sx={{ mt: 1 }} />
-											<Groups fontSize='small' sx={{ mt: -1 }} />,
-										</CardMedia>
-									} label= { passedEmployees.Total_Training_Hrs } />
-								</IconButton>
-							</Masonry>
+			<Dialog fullWidth={ true } maxWidth={ data.length > 0 ? 'lg' : 'sm' } open={openChild} onClose={handleCloseChild} aria-labelledby="dialog-Employees">
+				<DialogTitle id="dialog-Employees" sx={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center' }}> { passedEmployees.Emp_Name } </DialogTitle>
+				<DialogContent sx={{ overflow: 'hidden', '@media screen and (max-width: 1100px)': { overflow: 'auto' } }}>
+					<Card sx={{ display: 'flex', '@media screen and (max-width: 600px)': { display: 'flex', flexDirection: 'column' }, minWidth: 350, justifyContent: data.length > 0 ? '' : 'center' }} elevation={0}>
+						<div>
+							<CardMedia className={``} component="img" sx={{ width: 400, borderRadius: '2%', height: 400, '@media screen and (max-width: 500px)': { width: 270, height: 270 } }} image={ passedEmployees.Photo_URL === "photo" ? passedEmployees.Gender === "Male" ? avatarm.src : avatarf.src : passedEmployees.Photo_URL } alt={ passedEmployees.Emp_Name } />
+							<Typography component="div" sx={{ display: 'flex', justifyContent: 'space-evenly', mt: 2, '@media screen and (max-width: 500px)': { width: 270 }, '@media screen and (min-width: 501px) and (min-width: 700px)': { width: 340 } }}>
+								<Masonry columns={{ xs: 1, sm: 2 }} spacing={2}>
+									<Chip color="info" icon={<RememberMe fontSize='small' />} label={ passedEmployees.Emp_Code } />
+									<Chip sx={{ backgroundColor: passedEmployees.Gender === "Male" ? "#21a8fa" : "#e52264", color: '#FFFFFF' }} icon={ passedEmployees.Gender === "Male" ? <Male sx={{ color: '#FFFFFF !important' }} /> : <Female sx={{ color: '#FFFFFF !important' }} /> } label={ passedEmployees.Gender } />
+									<Chip color="info" icon={ passedEmployees.Gender === "Male" ? <Face fontSize='small' /> : <Face3 fontSize='small' /> } label={ passedEmployees.Designation } />
+									<Chip color="info" icon={<CorporateFare fontSize='small' />} label={ passedEmployees.Department } />
+									
+								</Masonry>
 							</Typography>
 							<Typography variant="h4" sx={{ display: data.length > 0 ? 'none' : 'flex', visibility: data.length > 0 ? 'hidden' : '', justifyContent: 'center', height: '100%' }}>
 								No Training Data Found...!
 							</Typography>
-							<Typography sx={{ display: data.length > 0 ? '' : 'none', visibility: data.length > 0 ? '' : 'hidden' }}>
-								<PieChart
-									colors={ palette }
-									series={[{
-										data,
-										innerRadius: 30,
-										outerRadius: 150,
-										paddingAngle: 5,
-										cornerRadius: 5,
-										startAngle: 0,
-										endAngle: 360,
-										highlightScope: { faded: 'global', highlighted: 'item' }, faded: { innerRadius: 30, additionalRadius: -30, color: '#2d333a' }
-									}]}
-									slotProps={{ legend: { seriesToDisplay: [] } }}
-									height={350}
-								/>
-								<Accordion defaultExpanded sx={{ padding: 1, mt: 2, borderTop: 0, display: data.length > 0 ? '' : 'none', visibility: data.length > 0 ? '' : 'hidden' }}>
-									<AccordionSummary expandIcon={ <ArrowDropDown /> } aria-controls="panel2-content" id="panel2-header">
-										<Typography>Topics</Typography>
-									</AccordionSummary>
-									<AccordionDetails>
-										<Typography className='flex gap-3'>
-											{
-												data.map((item: any, index: number) => 
-													<Tooltip key={index + 1} title={ item.label }>
-														<Paper style={{ backgroundColor: item.backgroundColorss, color: item.colors, width: '2.5vw', height: '5vh', display: 'flex', justifyContent: 'center', borderRadius: '50%' }} elevation={2}>
-															<Avatar sx={{ padding: 0.5, mt: 0.5 }} alt={ item.label } src= { item.icon } />
-														</Paper>
-													</Tooltip>
-												)
-											}
-										</Typography>
-									</AccordionDetails>
-								</Accordion>
+						</div>
+						<CardContent sx={{ flex: '1 0 auto', '@media screen and (max-width: 500px)': { flex: 'auto', width: 270 }, '@media screen and (min-width: 501px) and (max-width: 700px)': { width: 500 }, display: data.length > 0 ? 'flex' : 'none', width: '60%' }}>
+							<Typography component={'div'} sx={{ display: data.length > 0 ? '' : 'none', visibility: data.length > 0 ? '' : 'hidden', width: '100%' }}>
+								<TableContainer>
+									<Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
+										<caption><strong>Total Training Hours - { totalTrainingHours } { totalTrainingHours > 1 ? ' Hours' : ' Hour' }</strong></caption>
+										<TableHead>
+											<TableRow>
+												<TableCell>Training Name</TableCell>
+												<TableCell>Hours</TableCell>
+											</TableRow>
+										</TableHead>
+										<TableBody>
+										{
+											data.map((row: any) => (
+											<TableRow key={ row.id } sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: row.backgroundColorss }}>
+												<TableCell sx={{ color: row.colors }} component="th" scope="row"> { row.label } </TableCell>
+												<TableCell sx={{ color: row.colors }}>{ row.value }{ row.value > 1 ? ' Hours' : ' Hour' }</TableCell>
+											</TableRow>
+										))}
+										</TableBody>
+									</Table>
+								</TableContainer>
+									<Typography component={'div'} className='flex w-[100%]'>
+										<PieChart
+											colors={ palette }
+											series={[{
+												data,
+												innerRadius: 30,
+												outerRadius: 150,
+												paddingAngle: 5,
+												cornerRadius: 5,
+												startAngle: 0,
+												endAngle: 360,
+												highlightScope: { faded: 'global', highlighted: 'item' }, faded: { innerRadius: 30, additionalRadius: -30, color: '#2d333a' }
+											}]}
+											slotProps={{ legend: { hidden: true } }}
+											height={350}
+											sx={{ '@media screen and (max-width: 500px)': { width: `100% !important`, height: '200px !important' }, '@media screen and (min-width: 501px) and (max-width: 800px)': { width: `100% !important`, height: '300px !important' } }}
+										/>
+									</Typography>
 							</Typography>
 						</CardContent>
 					</Card>

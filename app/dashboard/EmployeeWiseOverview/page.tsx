@@ -6,7 +6,6 @@ import { CircularProgress, Paper } from '@mui/material';
 
 export default function Page() {
 
-
 	const [data, setData]: any = React.useState(null);
 	const [isLoading, setLoading] = React.useState(true)
 
