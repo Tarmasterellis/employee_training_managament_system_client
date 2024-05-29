@@ -93,7 +93,7 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 								<Chip sx={{ backgroundColor: "#e52264", color: "#FFFFFF" }} icon={ <Female sx={{ color: '#FFFFFF !important' }} /> } label = { femaleCount } />
 							</span>
 						</DialogTitle>
-						<Masonry columns={{ xs: 1, sm: 2, lg: 3 }} spacing={2}>
+						<Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
 							{
 								trainingTopics.map((eachEmployee: any, index: number) =>
 									<ButtonBase key={index} onClick={ () => handleModalClick(eachEmployee) }>
@@ -102,7 +102,7 @@ export const ModalPopup = ({ trainingTopics, open, setOpen }: any) => {
 												<ListItemAvatar>
 													<Avatar sx={{ width: 50, height: 50 }} alt={ eachEmployee.Gender } src={ eachEmployee.Photo_URL === "photo" ? eachEmployee.Gender === "Male" ? avatarm.src : avatarf.src : eachEmployee.Photo_URL } />
 												</ListItemAvatar>
-												<ListItemText className={`flex-none w-[100%]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
+												<ListItemText className={`flex-none w-[75%]`} primary = { eachEmployee.Emp_Name } secondary = { eachEmployee.Active_Inactive } />
 											</ListItem>
 										</Paper>
 									</ButtonBase>
