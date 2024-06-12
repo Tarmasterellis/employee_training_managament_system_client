@@ -41,7 +41,7 @@ export const backgroundColors = {
 	IOS: { name: 'IOS', backgroundColor:'#ff2d55', color: '#FFFFFF', hours: 200, icon: IOS.src },
 	CSharp: { name: 'CSharp', backgroundColor:'#A179DC', color: '#FFFFFF', hours: 0, icon: CSharp.src },
 	Kafka: { name: 'Kafka', backgroundColor:'#4B0B52', color: '#FFFFFF', hours: 3, icon: Kafka.src },
-	Gherkin: { name: 'Gherkin', backgroundColor:'#67ab05', color: '#FFFFFF', hours: 0.5, icon: Gherkin.src },
+	Gherkin: { name: 'Gherkin', backgroundColor:'#67ab05', color: '#FFFFFF', hours: 1, icon: Gherkin.src },
 	Git: { name: 'Git', backgroundColor:'#f34f29', color: '#FFFFFF', hours: 4, icon: Github.src },
 	Linux: { name: 'Linux', backgroundColor:'#ffcc33', color: '#2D333A', hours: 4, icon: Linux.src },
 	Docker: { name: 'Docker', backgroundColor:'#0db7ed', color: '#2D333A', hours: 8, icon: Docker.src },
